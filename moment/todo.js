@@ -38,10 +38,10 @@ function handleSubmit(event) {
 
 function loadTodos() {
   const loadedToDos = localStorage.getItem(TODOS_LOCAL);
-  if(loadedToDos !== null) {
-    const parsedTodos = JSON.stringify(loadedToDos);
-    parsedTodos.forEach(function(todo) {
-      paintTodos(todo.text)
+  if (loadedToDos !== null) {
+    const parsedToDos = JSON.parse(loadedToDos);
+    parsedToDos.forEach(function(toDo) {
+      paintTodos(toDo.text);
     });
   }
 }
