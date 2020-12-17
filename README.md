@@ -1,4 +1,4 @@
-# nomad-coders-clone-coding
+# clone-coding
 
 ### nomad coders의 클론 코딩
 https://nomadcoders.co/
