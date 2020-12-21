@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-   
+    <app-header />
   </div>
 </template>
 
 <script>
+import AppHeader from './components/AppHeader.vue';
+
 export default {
   name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+  components: {
+    AppHeader
+  },
 }
 </script>
 
