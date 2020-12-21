@@ -40,7 +40,7 @@ export default {
   font-size: 16px;
   background-color: none;
 }
-.memo-form form fieldset div button[type="submit"] {
+.memo-form form fieldset button[type="submit"] {
   float: right;
   width: 96px;
   padding: 12px 0;

@@ -12,7 +12,9 @@ import MemoForm from './MemoForm.vue';
 
 export default {
   name: 'memo-app',
-  components: { Memo, MemoFormMemoFormMemo },
+  components: { 
+    Memo, MemoForm 
+  },
   data : () => ({
     memos: [],
   }),
