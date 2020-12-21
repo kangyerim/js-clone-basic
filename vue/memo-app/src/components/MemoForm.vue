@@ -1,11 +1,11 @@
 /* 사용자의 메모를 입력받는 폼 */
 <template>
   <div class="memo-form">
-    <form>
+    <form @submit.prevent="addMemo">
       <fieldset>
         <div>
-          <input class="memo-form__title-form" placeholder="메모의 제목을 입력하세요" type="text" />
-          <textarea class="memo-form__content-form" placeholder="메모의 내용을 입력하세요" />
+          <input v-model="title" class="memo-form__title-form" placeholder="메모의 제목을 입력하세요" type="text" />
+          <textarea v-model="content" class="memo-form__content-form" placeholder="메모의 내용을 입력하세요" />
           <button type="reset"><i class="fas fa-sync-alt"></i></button>
         </div>
         <button type="submit">등록하기</button>
@@ -17,6 +17,21 @@
 <script>
 export default {
   name: 'memo-form',
+  data: () => ({
+    title: '',
+    content: '',
+  }),
+  methods: {
+    addMemo() {
+      const { title, content } = this;
+      const id = new Date().getTime();
+      const isEmpty = title.length <= 0 || content.length <= 0;
+      if(isEmpty) {
+        return alert('제목과 내용을 모두 작성해주세요');
+      }
+      this.$emit('addMemo', {id, title, content});
+    }
+  }
 }
 </script>
 
