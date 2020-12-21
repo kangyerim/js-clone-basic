@@ -7,5 +7,5 @@ https://nomadcoders.co/
 https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=199202180
 
 directory  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|- 1. moment : 바닐라 JS로 크롬 앱 만들기
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|- 1. moment : 바닐라 JS로 크롬 앱 만들기  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|- 2. memoApp : vue.js로 메모 관리 어플리케이션 만들기
