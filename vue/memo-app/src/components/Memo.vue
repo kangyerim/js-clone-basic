@@ -2,8 +2,14 @@
 <template>
   <li class="memo-item">
     <strong>{{memo.title}}</strong>
-    <p>{{memo.content}}</p>
-    <button type="button"><i class="fas fa-times"></i></button>
+    <p @dblclick="handleDbClick">
+      <template v-if="!isEditing">{{memo.content}}</template>
+      <input v-else type="text" ref="content" 
+              :value="memo.content"
+              @keydown.enter="updateMemo"
+              @blur="handleBlur">
+    </p>
+    <button @click="deleteMemo" type="button"><i class="fas fa-times"></i></button>
   </li>
 </template>
 
@@ -14,6 +20,39 @@ export default {
     memo: {
       type: Object
     }
+  },
+  data: () => ({
+    isEditing: false,
+  }),
+  methods: {
+    deleteMemo() {
+      const id = this.memo.id;
+      this.$emit('deleteMemo', id);
+    },
+    handleDbClick() {
+      this.isEditing = true;
+      this.$nextTick(() => {
+        this.$refs.content.focus();
+      });
+    },
+    updateMemo(event) {
+      const id = this.memo.id;
+      const content = event.target.value.trim();
+      if (content.length <= 0) {
+        return alert('메모의 내용을 입력해주세요.')
+      }
+      this.$emit('updateMemo', { id, content });
+      this.isEditing = false;
+    },
+    handleBlur() {
+      this.isEditing = false;
+    }
+  },
+  beforeUpdate() {
+    console.log("before update", this.$refs.content);
+  },
+  updated() {
+    console.log("updated", this.$refs.content);
   }
 }
 </script>
@@ -49,5 +88,11 @@ export default {
   font-size: 14px;
   line-height: 22px;
   color: #666;
+}
+.memo-item p input[type="text"]{
+  box-sizing: border-box;
+  width: 100%;
+  font-size: inherit;
+  border: 1px solid #999;
 }
 </style>
