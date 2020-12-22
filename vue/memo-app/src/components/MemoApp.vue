@@ -2,7 +2,9 @@
 <template>
   <div class="memo-app">
     <memo-form @addMemo="addMemo"/>
-    <memo />
+    <ul class="memo-list">
+      <memo v-for="(memo, i) in memos" :key="i" :memo="memo" />
+    </ul>
   </div>
 </template>
 
@@ -34,6 +36,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scope>
+.memo-list{
+  padding: 20px 0;
+  margin: 0;
+}
 </style>

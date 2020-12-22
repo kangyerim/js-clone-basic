@@ -22,6 +22,10 @@ export default {
     content: '',
   }),
   methods: {
+    resetFields() {
+      this.title = '';
+      this.content = '';
+    },
     addMemo() {
       const { title, content } = this;
       const id = new Date().getTime();
@@ -30,13 +34,13 @@ export default {
         return alert('제목과 내용을 모두 작성해주세요');
       }
       this.$emit('addMemo', {id, title, content});
+      this.resetFields();
     }
   }
 }
 </script>
 
-<style scope>
-.memo-form {
+<style scope> .memo-form {
   margin-bottom: 24px;
   padding-bottom: 40px;
   border-bottom: 1px solid #eee;
