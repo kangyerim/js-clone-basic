@@ -13,6 +13,11 @@
 <script>
 import Memo from './Memo.vue';
 import MemoForm from './MemoForm.vue';
+import axios from 'axios';
+
+const memoAPICore = axios.create({
+  baseURL: 'http://localhost:8000/api/memos'
+})
 
 export default {
   name: 'memo-app',
@@ -24,8 +29,8 @@ export default {
   }),
   methods: {
     addMemo(payload) {
-      this.memos.push(payload);
-      this.storeMemo();
+      memoAPICore.post('/', payload)
+      .then(res => { this.memos.push(res.data) })
     },
     storeMemo() {
       const memoToString = JSON.stringify(this.memos);
@@ -33,19 +38,21 @@ export default {
     },
     deleteMemo(id) {
       const targetId = this.memos.findIndex(v => v.id === id);
-      this.memos.splice(targetId, 1);
-      this.storeMemo();
+      memoAPICore.delete(`/${id}`)
+      .then(() => { this.memos.splice(targetId, 1) })      
     },
     updateMemo(payload) {
       const { id, content } = payload;
       const targetIdx = this.memos.findIndex(v => v.id === id);
       const targetMemo = this.memos[targetIdx];
-      this.memos.splice(targetIdx, 1, { ...targetMemo, content });
-      this.storeMemo();
+      memoAPICore.put(`/${id}`, { content })
+      .then(() => { this.memos.splice(targetIdx, 1, { ...targetMemo, content }) })
     }
   },
   created() {
-    this.memos = localStorage.memos ? JSON.parse(localStorage.memos) : []
+    // this.memos = localStorage.memos ? JSON.parse(localStorage.memos) : []
+    memoAPICore.get('/')
+    .then(res => { this.memos = res.data; })
   }
 }
 </script>

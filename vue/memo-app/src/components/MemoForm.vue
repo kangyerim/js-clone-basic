@@ -27,13 +27,14 @@ export default {
       this.content = '';
     },
     addMemo() {
+      // const id = new Date().getTime();
       const { title, content } = this;
-      const id = new Date().getTime();
       const isEmpty = title.length <= 0 || content.length <= 0;
       if(isEmpty) {
         return alert('제목과 내용을 모두 작성해주세요');
       }
-      this.$emit('addMemo', {id, title, content});
+      // this.$emit('addMemo', {id, title, content});
+      this.$emit('addMemo', { title, content });
       this.resetFields();
     }
   }
