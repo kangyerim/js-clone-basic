@@ -14,6 +14,7 @@
 import Memo from './Memo.vue';
 import MemoForm from './MemoForm.vue';
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 const memoAPICore = axios.create({
   baseURL: 'http://localhost:8000/api/memos'
@@ -28,6 +29,7 @@ export default {
     memos: [],
   }),
   methods: {
+    ...mapActions(['fetchMemos']),
     addMemo(payload) {
       memoAPICore.post('/', payload)
       .then(res => { this.memos.push(res.data) })
@@ -50,9 +52,7 @@ export default {
     }
   },
   created() {
-    // this.memos = localStorage.memos ? JSON.parse(localStorage.memos) : []
-    memoAPICore.get('/')
-    .then(res => { this.memos = res.data; })
+    this.fetchMemos();
   }
 }
 </script>
