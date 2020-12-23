@@ -1,4 +1,10 @@
-import { FETCH_MEMOS, ADD_MEMO, DELETE_MEMO, EDIT_MEMO } from './mutations-types';
+import { 
+  FETCH_MEMOS,
+  ADD_MEMO,
+  DELETE_MEMO,
+  EDIT_MEMO,
+  SET_EDITING_ID,
+  RESET_EDITING_ID } from './mutations-types';
 
 export default {
   [FETCH_MEMOS] (state, payload) {
@@ -16,5 +22,11 @@ export default {
     const targetIdx = state.memos.findIndex(v => v.id === id);
     const targetMemo = state.memos[targetIdx];
     state.memos.splice(targetIdx, 1, { ...targetMemo, content });
+  },
+  [SET_EDITING_ID](state, id) {
+    state.editingId = id;
+  },
+  [RESET_EDITING_ID](state) {
+    state.editingId = 0;
   }
 }

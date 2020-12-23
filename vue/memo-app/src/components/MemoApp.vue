@@ -3,9 +3,13 @@
   <div class="memo-app">
     <memo-form @addMemo="addMemo"/>
     <ul class="memo-list">
-      <memo v-for="(memo, i) in memos" :key="i" :memo="memo"
+      <memo v-for="(memo, i) in memos" :key="i"
+            :memo="memo"
+            :editingId="editingId"
             @deleteMemo="deleteMemo" 
-            @updateMemo="updateMemo" />
+            @updateMemo="updateMemo"
+            @setEditingId="SET_EDITING_ID"
+            @resetEditingId="RESET_EDITING_ID"/>
     </ul>
   </div>
 </template>
@@ -13,12 +17,8 @@
 <script>
 import Memo from './Memo.vue';
 import MemoForm from './MemoForm.vue';
-import axios from 'axios';
-import { mapState, mapActions } from 'vuex';
-
-const memoAPICore = axios.create({
-  baseURL: 'http://localhost:8000/api/memos'
-})
+import { mapState, mapMutations, mapActions } from 'vuex';
+import { SET_EDITING_ID, RESET_EDITING_ID } from "../store/mutations-types";
 
 export default {
   name: 'memo-app',
@@ -26,14 +26,11 @@ export default {
     Memo, MemoForm 
   },
   computed: {
-    ...mapState(['memos'])
+    ...mapState(['memos', 'editingId'])
   },
   methods: {
+    ...mapMutations([SET_EDITING_ID, RESET_EDITING_ID]),
     ...mapActions(['fetchMemos', 'addMemo', 'deleteMemo', 'updateMemo']),
-    storeMemo() {
-      const memoToString = JSON.stringify(this.memos);
-      localStorage.setItem('memos', memoToString)
-    },
   },
   created() {
     this.fetchMemos();

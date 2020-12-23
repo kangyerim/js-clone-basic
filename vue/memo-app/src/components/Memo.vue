@@ -4,7 +4,7 @@
     <strong>{{memo.title}}</strong>
     <p @dblclick="handleDbClick">
       <template v-if="!isEditing">{{memo.content}}</template>
-      <input v-else type="text" ref="content" 
+      <input v-else type="text" ref="content"
               :value="memo.content"
               @keydown.enter="updateMemo"
               @blur="handleBlur">
@@ -19,18 +19,24 @@ export default {
   props: {
     memo: {
       type: Object
+    },
+    editingId: {
+      type: Number
     }
   },
-  data: () => ({
-    isEditing: false,
-  }),
+  data: () => ({ }),
+  computed: {
+    isEditing() {
+      return this.memo.id === this.editingId;
+    }
+  },
   methods: {
     deleteMemo() {
       const id = this.memo.id;
       this.$emit('deleteMemo', id);
     },
     handleDbClick() {
-      this.isEditing = true;
+      this.$emit('setEditingId', this.memo.id)
       this.$nextTick(() => {
         this.$refs.content.focus();
       });
@@ -42,18 +48,12 @@ export default {
         return alert('메모의 내용을 입력해주세요.')
       }
       this.$emit('updateMemo', { id, content });
-      this.isEditing = false;
+      this.$refs.content.blur();
     },
     handleBlur() {
-      this.isEditing = false;
+      this.$emit('resetEditingId');
     }
   },
-  beforeUpdate() {
-    console.log("before update", this.$refs.content);
-  },
-  updated() {
-    console.log("updated", this.$refs.content);
-  }
 }
 </script>
 
