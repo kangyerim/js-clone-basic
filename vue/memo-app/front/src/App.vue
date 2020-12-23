@@ -24,5 +24,4 @@ export default {
   width: 560px;
   margin: 0 auto;
 }
-
 </style>
