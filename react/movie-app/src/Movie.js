@@ -2,7 +2,7 @@ import React from 'react';
 import Proptypes from 'prop-types';
 
 function Movies({ id, year, title, summary, poster }) {
-  return <div></div>
+  return <div><h4>{title}</h4></div>
 }
 
 Movies.protoType = {
