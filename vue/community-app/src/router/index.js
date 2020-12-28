@@ -10,6 +10,12 @@ export default new Router({
       path: '/',
       name: 'PostListPage',
       component: () => import ('@/pages/PostListPage.vue')
+    },
+    {
+      path: '/post/:postId',
+      name: 'PostViewPage',
+      component: () => import ('@/pages/PostViewPage.vue'),
+      props:true,
     }
   ]
 })
