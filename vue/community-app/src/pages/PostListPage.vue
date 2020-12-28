@@ -6,18 +6,20 @@
 </template>
 
 <script>
-import api from '@/api';
+import { mapState, mapActions } from 'vuex';
 import PostList from '@/components/PostList';
 
 export default {
   name: 'post-list-page',
   components: { PostList },
-  data: () => ({
-    posts: []
-  }),
+  computed: {
+    ...mapState(['posts'])
+  },
+  methods: {
+    ...mapActions(['fetchPostList']),
+  },
   created() {
-    api.get('/posts')
-    .then(res => this.posts = res.data)
+    this.fetchPostList();
   }
 }
 </script>
