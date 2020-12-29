@@ -16,6 +16,11 @@ export default new Router({
       name: 'PostViewPage',
       component: () => import ('@/pages/PostViewPage.vue'),
       props:true,
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: () => import ('@/pages/Signup.vue')
     }
   ]
 })
