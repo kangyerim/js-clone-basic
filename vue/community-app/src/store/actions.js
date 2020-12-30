@@ -1,5 +1,8 @@
 import api from '@/api';
-import { FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, SET_MY_INFO } from  './mutations-type';
+import { FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, 
+  SET_MY_INFO,
+  DELETE_ACCESS_TOKEN,
+  DELETE_MY_INFO } from  './mutations-type';
 
 export default {
   fetchPostList({ commit }) {
@@ -28,5 +31,9 @@ export default {
     .then(res => {
       commit(SET_MY_INFO, res.data);
     })
+  },
+  signout({ commit }) {
+    commit(DELETE_ACCESS_TOKEN);
+    commit(DELETE_MY_INFO);
   }
 }

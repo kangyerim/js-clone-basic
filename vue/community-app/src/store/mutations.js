@@ -1,6 +1,9 @@
 import api from '@/api';
 import cookie from 'js-cookie';
-import {FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, SET_MY_INFO} from '@/store/mutations-type';
+import {FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, 
+  SET_MY_INFO,
+  DELETE_ACCESS_TOKEN,
+  DELETE_MY_INFO} from '@/store/mutations-type';
 
 export default {
   [FETCH_POST_LIST] (state, posts) {
@@ -18,5 +21,13 @@ export default {
   },
   [SET_MY_INFO](state, me) {
     state.me = me;
+  },
+  [DELETE_ACCESS_TOKEN](state) {
+    state.accessToken = '';
+    delete api.defaults.headers.common.Authorization;
+    cookie.remove('accessToken');
+  },
+  [DELETE_MY_INFO](state) {
+    state.me = null;
   }
 }

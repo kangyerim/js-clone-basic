@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -9,23 +10,35 @@ export default new Router({
     {
       path: '/',
       name: 'PostListPage',
-      component: () => import ('@/pages/PostListPage.vue')
+      components: {
+        header: () => import('@/components/AppHeader'),
+        default: () => import ('@/pages/PostListPage.vue'),
+      },
     },
     {
       path: '/post/:postId',
       name: 'PostViewPage',
-      component: () => import ('@/pages/PostViewPage.vue'),
-      props:true,
+      components: {
+        header: () => import('@/components/AppHeader'),
+        default: () => import('@/pages/PostViewPage.vue'),
+      },
+      props: { default: true },
     },
     {
       path: '/signup',
       name: 'Signup',
-      component: () => import ('@/pages/Signup.vue')
+      components: {
+        header: () => import('@/components/AppHeader'),
+        default: () => import('@/pages/Signup'),
+      },
     },
     {
       path: '/signin',
       name: 'Signin',
-      component: () => import('@/pages/Signin.vue')
+      components: {
+        header: () => import('@/components/AppHeader'),
+        default: () => import('@/pages/Signin.vue'),
+      },
     }
   ]
 })
