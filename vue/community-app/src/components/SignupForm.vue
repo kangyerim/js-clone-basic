@@ -1,5 +1,5 @@
 <template>
-  <form novalidate>
+  <form @submit.prevent="submit" novalidate>
     <fieldset>
       <input v-model="name" placeholder="이름을 입력해주세요." type="text" />
       <input v-model="email" placeholder="이메일을 입력해주세요." type="email" />
@@ -18,7 +18,20 @@ export default {
     email: '',
     password: '',
     passwordConfirm: '',
-  })
+  }),
+  methods: {
+    submit() {
+      const { name, email, password, passwordConfirm } = this;
+      if(!name || !email || !password || !passwordConfirm) {
+        alert('모든 항목을 입력해주세요!');
+      }
+      if(password !== passwordConfirm) {
+        alert('비밀번호가 일치하지 않습니다.')
+        return
+      }
+      this.$emit('submit', { name, email, password })
+    }
+  }
 }
 </script>
 
