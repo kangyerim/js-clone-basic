@@ -1,5 +1,6 @@
 import api from '@/api';
-import {FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN} from '@/store/mutations-type';
+import cookie from 'js-cookie';
+import {FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, SET_MY_INFO} from '@/store/mutations-type';
 
 export default {
   [FETCH_POST_LIST] (state, posts) {
@@ -11,7 +12,11 @@ export default {
   [SET_ACCESS_TOKEN](state, accessToken) {
     if(accessToken) {
       state.accessToken = accessToken;
-      api.defaults.headers.common.Authorization = `Bearer${accessToken}`;
+      api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      cookie.set('accessToken', accessToken);
     }
+  },
+  [SET_MY_INFO](state, me) {
+    state.me = me;
   }
 }
