@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import api from '@/api';
+import { mapActions } from 'vuex';
 import SigninForm from '@/components/SigninForm.vue';
 
 export default {
@@ -16,12 +16,10 @@ export default {
     SigninForm
   },
   methods: {
+    ...mapActions(['signin']),
     onSubmit(payload) {
-      const { email, password } = payload
-      api.post(`/auth/signin`, { email, password })
+      this.signin(payload)
       .then(res => {
-        const { accessToken } = res.data;
-        api.defaults.headers.common.Authorization = `Bearer${accessToken}`;
         alert('로그인이 완료 되었습니다.');
         this.$router.push({ name: 'PostListPage'});
       })
