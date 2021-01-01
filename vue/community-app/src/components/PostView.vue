@@ -23,7 +23,7 @@ export default {
         return isValidPostId && isValidTitle && isSecureContext
       }
     }
-  }
+  },
 }
 </script>
 

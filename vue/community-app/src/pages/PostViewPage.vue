@@ -1,6 +1,8 @@
 <template>
   <div class="post-view-page">
-    <post-view :post="post" />
+    <post-view v-if="post" :post="post" />
+    <router-link :to="{ name: 'PostEditPage',
+    params: { postId } }">수정</router-link>
     <router-link :to="{ name: 'PostListPage' }">목록</router-link>
   </div>
 </template>
