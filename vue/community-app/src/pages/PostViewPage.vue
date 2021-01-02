@@ -5,21 +5,24 @@
     params: { postId } }">수정</router-link>
     <button @click="onDelete">삭제</button>
     <router-link :to="{ name: 'PostListPage' }">목록</router-link>
+    <comment-form  @submit="onCommentSubmit"/>
     <comment-list v-if="post" :comments="post.comments" />
   </div>
 </template>
 
 <script>
 import api from '@/api';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import PostView from '@/components/PostView';
 import CommentList from '@/components/CommentList.vue';
+import CommentForm from '@/components/CommentForm.vue';
 
 export default {
   name: 'post-view-page',
   components: {
     PostView,
-    CommentList
+    CommentList,
+    CommentForm
   },
   props: {
     postId: {
@@ -28,10 +31,11 @@ export default {
     }
   },
   computed: {
-    ...mapState(['post'])
+    ...mapState(['post']),
+    ...mapGetters(['isAuthorized']),
   },
   methods: {
-    ...mapActions(['fetchPost']),
+    ...mapActions(['fetchPost', 'createComment']),
     onDelete() {
       const { id } = this.post;
       api.delete(`/posts/${id}`)
@@ -47,6 +51,21 @@ export default {
             console.dir(err.response.data.msg);
           }
         })
+    },
+    onCommentSubmit(payload) {
+      if(!this.isAuthorized) {
+        alert('로그인이 필요합니다!');
+        this.$router.push({ name: Signin });
+      } else {
+        this.createComment(payload)
+        .then(() => {
+          alert('댓글이 성공적으로 작성되었습니다');
+        })
+        .catch(err => {
+          alert(err.response.data.msg);
+        })
+
+      }
     }
   },
   created() {

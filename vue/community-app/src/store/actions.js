@@ -2,7 +2,8 @@ import api from '@/api';
 import { FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, 
   SET_MY_INFO,
   DELETE_ACCESS_TOKEN,
-  DELETE_MY_INFO } from  './mutations-type';
+  DELETE_MY_INFO,
+  UPDATE_COMMENT } from  './mutations-type';
 
 export default {
   fetchPostList({ commit }) {
@@ -35,5 +36,12 @@ export default {
   signout({ commit }) {
     commit(DELETE_ACCESS_TOKEN);
     commit(DELETE_MY_INFO);
+  },
+  createComment({ commit, state }, comment) {
+    const postId = state.post.id;
+    return api.post(`/posts/${postId}/comments`, { contents: comment })
+    .then(res => {
+      commit(UPDATE_COMMENT, res.data);
+    })
   }
 }

@@ -3,7 +3,9 @@ import cookie from 'js-cookie';
 import {FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN, 
   SET_MY_INFO,
   DELETE_ACCESS_TOKEN,
-  DELETE_MY_INFO} from '@/store/mutations-type';
+  DELETE_MY_INFO,
+  UPDATE_COMMENT
+} from '@/store/mutations-type';
 
 export default {
   [FETCH_POST_LIST] (state, posts) {
@@ -29,5 +31,8 @@ export default {
   },
   [DELETE_MY_INFO](state) {
     state.me = null;
+  },
+  [UPDATE_COMMENT](state, payload) {
+    state.post.comments.push(payload);
   }
 }
