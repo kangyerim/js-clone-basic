@@ -5,6 +5,7 @@
     params: { postId } }">수정</router-link>
     <button @click="onDelete">삭제</button>
     <router-link :to="{ name: 'PostListPage' }">목록</router-link>
+    <comment-list v-if="post" :comments="post.comments" />
   </div>
 </template>
 
@@ -12,11 +13,13 @@
 import api from '@/api';
 import { mapState, mapActions } from 'vuex';
 import PostView from '@/components/PostView';
+import CommentList from '@/components/CommentList.vue';
 
 export default {
   name: 'post-view-page',
   components: {
-    PostView
+    PostView,
+    CommentList
   },
   props: {
     postId: {
