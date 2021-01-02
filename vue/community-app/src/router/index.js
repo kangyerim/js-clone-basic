@@ -11,7 +11,7 @@ export default new Router({
       path: '/',
       name: 'PostListPage',
       components: {
-        header: () => import('@/components/AppHeader'),
+        header: () => import('@/components/AppHeader.vue'),
         default: () => import ('@/pages/PostListPage.vue'),
       },
     },
@@ -19,7 +19,7 @@ export default new Router({
       path: '/post/create',
       name: 'PostCreatePage',
       components: {
-        header: () => import('@/components/Appheader'),
+        header: () => import('@/components/Appheader.vue'),
         default: () => import('@/pages/PostCreatePage.vue'),
       },
       beforeEnter(to, from, next) {
@@ -35,7 +35,7 @@ export default new Router({
       path: '/post/:postId',
       name: 'PostViewPage',
       components: {
-        header: () => import('@/components/AppHeader'),
+        header: () => import('@/components/AppHeader.vue'),
         default: () => import('@/pages/PostViewPage.vue'),
       },
       props: { default: true },
@@ -44,7 +44,7 @@ export default new Router({
       path: '/post/:postId/edit',
       name: 'PostEditPage',
       components: {
-        header: () => import('@/components/AppHeader'),
+        header: () => import('@/components/AppHeader.vue'),
         default: () => import('@/pages/PostEditPage.vue'),
       },
       props: { default: true },
@@ -76,15 +76,15 @@ export default new Router({
       path: '/signup',
       name: 'Signup',
       components: {
-        header: () => import('@/components/AppHeader'),
-        default: () => import('@/pages/Signup'),
+        header: () => import('@/components/AppHeader.vue'),
+        default: () => import('@/pages/Signup.vue'),
       },
     },
     {
       path: '/signin',
       name: 'Signin',
       components: {
-        header: () => import('@/components/AppHeader'),
+        header: () => import('@/components/AppHeader.vue'),
         default: () => import('@/pages/Signin.vue'),
       },
     },
