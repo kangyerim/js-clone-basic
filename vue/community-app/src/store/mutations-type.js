@@ -5,3 +5,5 @@ export const SET_MY_INFO = "SET_MY_INFO";
 export const DELETE_ACCESS_TOKEN = "DELETE_ACCESS_TOKEN";
 export const DELETE_MY_INFO = "DELETE_MY_INFO";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
+export const EDIT_COMMENT = "EDIT_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";

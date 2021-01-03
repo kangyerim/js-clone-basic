@@ -3,7 +3,10 @@ import { FETCH_POST_LIST, FETCH_POST, SET_ACCESS_TOKEN,
   SET_MY_INFO,
   DELETE_ACCESS_TOKEN,
   DELETE_MY_INFO,
-  UPDATE_COMMENT } from  './mutations-type';
+  UPDATE_COMMENT,
+  EDIT_COMMENT,
+  DELETE_COMMENT,
+ } from  './mutations-type';
 
 export default {
   fetchPostList({ commit }) {
@@ -42,6 +45,21 @@ export default {
     return api.post(`/posts/${postId}/comments`, { contents: comment })
     .then(res => {
       commit(UPDATE_COMMENT, res.data);
+    })
+  },
+  editComment({ commit, state }, { commentId, comment}) {
+    const postId = state.post.id;
+    return api.put(`/posts/${postId}/comments/${commentId}`, {
+      contents: comment })
+      .then(res => {
+        commit(EDIT_COMMENT, res.data);
+      })
+  },
+  deleteComment({ commit, state }, commentId) {
+    const postId = state.post.id;
+    return api.delete(`/posts/${postId}/comments/${commentId}`)
+    .then(res => {
+      commit(DELETE_COMMENT, commentId);
     })
   }
 }
