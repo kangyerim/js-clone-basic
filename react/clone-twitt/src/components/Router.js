@@ -4,17 +4,23 @@ import Auth from 'routes/Auth';
 import EditProfile from 'routes/EditProfile';
 import Home from 'routes/Home';
 import Profile from 'routes/Profile';
+import Navigation from 'components/Navigation';
 
 const AppRouter = ({ loggedIn }) => {
   return (
     <Router>
+      {loggedIn && <Navigation />}
       <Switch>
         {loggedIn ? (
           <>
             <Route exact path="/">
-              <Home></Home>
-              <Profile></Profile>
-              <EditProfile></EditProfile>
+              <Home />
+            </Route>
+            <Route exact path="/myprofile">
+              <Profile />
+            </Route>
+            <Route exact path="/editprofile">
+              <EditProfile />
             </Route>
           </>
         ) : (
