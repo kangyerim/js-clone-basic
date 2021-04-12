@@ -5,17 +5,25 @@ import { authService } from 'firebase-config';
 function App() {
   const [init, setInit] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState(null);
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setLoggedIn(true);
-      } else {
-        setLoggedIn(false);
+        setUserObj(user);
       }
       setInit(true);
     });
   }, []);
-  return <>{init ? <AppRouter loggedIn={loggedIn} /> : 'initializing...'}</>;
+  return (
+    <>
+      {init ? (
+        <AppRouter loggedIn={Boolean(userObj)} userObj={userObj} />
+      ) : (
+        'initializing...'
+      )}
+    </>
+  );
 }
 
 export default App;
