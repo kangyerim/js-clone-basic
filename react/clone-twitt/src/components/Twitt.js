@@ -1,13 +1,14 @@
-import { dbService } from 'firebase-config';
+import { dbService, storageService } from 'firebase-config';
 import React, { useState } from 'react';
 
 const Twitt = ({ twittObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newTwitt, setNewTwitt] = useState(twittObj.text);
-  const onDelete = () => {
+  const onDelete = async () => {
     const ok = window.confirm('해당 트윗을 삭제하시겠습니까?');
     if (ok) {
-      dbService.doc(`mentionList/${twittObj.id}`).delete();
+      await dbService.doc(`mentionList/${twittObj.id}`).delete();
+      await storageService.refFromURL(twittObj.attachmentUrl).delete();
     }
   };
   const toggleEditing = () => setEditing((pre) => !pre);
@@ -36,6 +37,9 @@ const Twitt = ({ twittObj, isOwner }) => {
       ) : (
         <>
           <h4>{twittObj.text}</h4>
+          {twittObj.attachmentUrl && (
+            <img src={twittObj.attachmentUrl} width="50px" height="50px" />
+          )}
           {isOwner && (
             <>
               <button onClick={onDelete}>delete</button>

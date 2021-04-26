@@ -4,7 +4,6 @@ import { authService } from 'firebase-config';
 
 function App() {
   const [init, setInit] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
