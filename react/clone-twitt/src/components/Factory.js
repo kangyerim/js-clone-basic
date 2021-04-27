@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { dbService, storageService } from 'firebase-config';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Factory = ({ userObj }) => {
   const [mention, setMention] = useState('');
@@ -8,6 +10,9 @@ const Factory = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (mention === '') {
+      return;
+    }
     let attachmentUrl = '';
     if (attachment) {
       const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
@@ -23,8 +28,7 @@ const Factory = ({ userObj }) => {
     await dbService.collection('mentionList').add(nweet);
     setMention('');
     setAttachment('');
-    setAttachment(null);
-    document.getElementById('fileInput').value = '';
+    document.getElementById('attach-file').value = '';
   };
   const onMention = (e) => {
     const {
@@ -50,29 +54,48 @@ const Factory = ({ userObj }) => {
   };
   const onClearFile = () => {
     setAttachment('');
-    document.getElementById('fileInput').value = '';
+    document.getElementById('attach-file').value = '';
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        onChange={onMention}
-        value={mention}
-        type="text"
-        placeholder="mention"
-        maxLength={120}
-      />
+    <form onSubmit={onSubmit} className="factoryForm">
+      <div className="factory__container">
+        <input
+          onChange={onMention}
+          value={mention}
+          type="text"
+          placeholder="mention"
+          maxLength={120}
+          className="factory__input"
+        />
+        <input type="submit" value="twit" className="factory__arrow" />
+      </div>
+      <label for="attach-file" className="factoryInput__label">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
       <input
         onChange={onFileChange}
+        style={{
+          opacity: 0,
+        }}
         type="file"
         accept="image/*"
-        id="fileInput"
+        id="attach-file"
       />
-      <input type="submit" value="twit" />
       {attachment && (
-        <div>
-          <img src={attachment} width="50px" height="50px" alt="preview" />
-          <button onClick={onClearFile}>clear img</button>
+        <div className="factoryForm__attachment">
+          <img
+            src={attachment}
+            alt="첨부된 이미지"
+            style={{
+              backgroundImage: attachment,
+            }}
+          />
+          <div className="factoryForm__clear" onClick={onClearFile}>
+            <span>Remove</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
         </div>
       )}
     </form>

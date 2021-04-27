@@ -1,5 +1,5 @@
 import { authService, dbService } from 'firebase-config';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Profile = ({ userObj, refreshUser }) => {
@@ -34,18 +34,32 @@ const Profile = ({ userObj, refreshUser }) => {
   useEffect(() => {
     getMyTwitts();
   }, []);
+
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <input
-          value={newDisplayName}
-          onChange={onChange}
-          type="text"
-          placeholder="Display Name"
-        ></input>
-        <input type="submit" value="updateProfile"></input>
-      </form>
-      <button onClick={onLogOut}>LogOut</button>
+      <div className="container">
+        <form onSubmit={onSubmit} className="profileForm">
+          <input
+            value={newDisplayName}
+            onChange={onChange}
+            type="text"
+            placeholder="Display Name"
+            autoFocus
+            className="formInput"
+          ></input>
+          <input
+            type="submit"
+            value="Update Profile"
+            className="formBtn"
+            style={{
+              marginTop: 10,
+            }}
+          ></input>
+        </form>
+        <span className="formBtn cancelBtn logOut" onClick={onLogOut}>
+          Log Out
+        </span>
+      </div>
     </>
   );
 };

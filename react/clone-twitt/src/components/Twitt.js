@@ -1,5 +1,7 @@
 import { dbService, storageService } from 'firebase-config';
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Twitt = ({ twittObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -25,26 +27,44 @@ const Twitt = ({ twittObj, isOwner }) => {
     setEditing(false);
   };
   return (
-    <div>
+    <div className="nweet">
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
-            <input value={newTwitt} onChange={onChange} type="text" required />
-            <input type="submit" value="트윗 수정" />
+          <form onSubmit={onSubmit} className="container nweetEdit">
+            <input
+              value={newTwitt}
+              onChange={onChange}
+              type="text"
+              className="formInput"
+              required
+              autoFocus
+            />
+            <input type="submit" value="트윗 수정" className="formBtn" />
           </form>
-          <button onClick={toggleEditing}>cancel</button>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>
         </>
       ) : (
         <>
           <h4>{twittObj.text}</h4>
           {twittObj.attachmentUrl && (
-            <img src={twittObj.attachmentUrl} width="50px" height="50px" />
+            <img
+              src={twittObj.attachmentUrl}
+              width="50px"
+              height="50px"
+              alt="첨부된 사진"
+            />
           )}
           {isOwner && (
-            <>
-              <button onClick={onDelete}>delete</button>
-              <button onClick={toggleEditing}>edit</button>
-            </>
+            <div className="nweet__actions">
+              <span onClick={onDelete}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           )}
         </>
       )}
