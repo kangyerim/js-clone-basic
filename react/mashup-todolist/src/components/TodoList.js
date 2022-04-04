@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTodoState } from '../TodoContext';
 import TodoItem from './TodoItem';
 
 const TodoListBlock = styled.div`
@@ -11,12 +12,19 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
+  const todos = useTodoState();
+
   return (
     <TodoListBlock>
-      <TodoItem text="우앵ㅇ웅11" done={true}></TodoItem>
-      <TodoItem text="우앵ㅇ웅22" done={true}></TodoItem>
-      <TodoItem text="우앵ㅇ웅33" done={false}></TodoItem>
-      <TodoItem text="우앵ㅇ웅44" done={false}></TodoItem>
+      {/* map을 화살표 함수로 사용할 때는 리턴() 또는 {return 컴포넌트;}를 작성 */}
+      {todos.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          id={todo.id}
+          text={todo.text}
+          done={todo.done}
+        ></TodoItem>
+      ))}
     </TodoListBlock>
   );
 }
